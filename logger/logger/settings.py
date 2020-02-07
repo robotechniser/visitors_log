@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-# Supply your own 
+# Supply your own local_settings.py
 
 import os
 from .local_settings import *
