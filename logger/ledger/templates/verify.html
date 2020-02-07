@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+
+{% block login %}
+    <div class="card-body">
+        {% if form.errors %}
+            <p>{{ form.errors }}</p>
+        {% endif %}
+            <h2 class="card-title">Verify OTP</h2>
+            <ul class="list-group">
+                <li class="list-group-item card-subtitle mb-2">Use your NISER Mail ID.</span></li>
+            </ul>
+            <form action="" method="POST">
+                {% csrf_token %}
+                <table class="field-table">
+                    {{ form.as_table }}
+                </table>
+                <input type="submit" class="btn btn-primary" value="Submit">
+                <a class="btn btn-info" href="/">Home</a>
+            </form>
+            {% if message %}
+                <p style="color: red; margin-top: 20px;"><strong>{{ message }}</strong></p>
+            {% endif %}
+        </div>
+{% endblock login %}

@@ -1,0 +1,125 @@
+:root {
+    height: 98%;
+
+    margin: 10px 0;
+    padding: 0;
+}
+
+html, body {
+    background: #343A40;
+    color: white;
+    text-align: center;
+}
+
+input {
+    color: white;
+}
+
+form {
+    border: 1.5px #343C46 solid;
+    border-radius: 10px;
+}
+
+.col-sm-9 {
+    padding-left: 0;
+}
+
+.container {
+    margin: 12px auto;
+}
+
+.card {
+    background: rgba(63, 77, 90, 0.6);
+    color: white;
+    border-radius: 10px;
+
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+}
+
+.card-title {
+    margin: 10px 20px 40px 20px;
+}
+
+.list-group {
+    margin: 20px 0;
+}
+
+.list-group-item {
+    background: none;
+
+    text-align: justify;
+}
+
+.navbar {
+    background: rgba(14, 116, 82, 0.8);
+    /* rgba(252, 45, 45, 0.4); */
+    margin: 0 0 10px 0;
+    padding: 12px 15px;
+
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+}
+
+.field-table {
+    margin: 15px auto 25px auto;
+}
+
+.btn {
+    margin: 15px;
+}
+
+.table {
+    text-align: center;
+
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.75);
+}
+
+.stats {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.stats-field {
+    float: right;
+
+    font-weight: bolder;
+}
+
+.login-list-data {
+    background: #212529; /* Overriding BS 4.4.1 */
+}
+
+.name-field, .pwd-field, .email-field, .otp-field {
+    margin: 5px auto;
+
+    background: inherit;
+
+    outline: none;
+    border: none;
+    border-bottom: 1px solid white;
+    box-shadow: 0px 10px 2px -8px rgba(0,0,0,0.75);
+}
+
+label[for="id_OTP"] {
+    text-transform: uppercase;
+}
+
+label[for="id_name"], label[for="id_password"], label[for="id_email"], label[for="id_OTP"], label[for="id_confirm_password"], label[for="id_forgot_pwd"] {
+    margin: 5px;
+    padding: 0;
+
+    text-shadow: 2px 2px 4px #000;
+    font-weight: 600;
+    font-size: 20px;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+#id_forgot_password {
+    float: left;
+    margin: -2.5px 10px 0 10px;
+}
+
+label[for="id_forgot_password"] {
+    text-shadow: none;
+    font-size: 15px;
+}
