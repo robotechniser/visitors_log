@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        {% block title %}<title>MLab Ledger</title>{% endblock %}
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    </head>
+    <body class="bg-dark">
+        <div class="container-fluid">
+            <div class="navbar navbar-dark">
+                <h2>Welcome to MLab, School of Computer Sciences, NISER</h2>
+                <h3>MLab Visitor's Log | {{ date|date:"M d, Y" }}</h3>
+            </div>
+            <div class="row">
+                <div class="col-sm-3" style="padding-left: 0;">
+                    <div class="container stats">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h2 class="card-title">Site Statistics</h2>
+                                <ul class="list-group">
+                                    <li class="list-group-item card-subtitle mb-2"><strong>Total Logins Today: </strong> <span class="stats-field">{{ num_logins_total }}</span></li>
+                                    <li class="list-group-item card-subtitle mb-2"><strong>Currently logged in: </strong> <span class="stats-field">{{ num_logged_in }}</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container">
+                        <div class="card text-center">
+                            {% block login %}
+                            <div class="card-body">
+                                {% if form.errors %}
+                                    <p>Your username and password didn't match. Please try again! {{ form.errors }}</p>
+                                {% endif %}
+                                    <h2 class="card-title">Entry Form</h2>
+                                    <ul class="list-group">
+                                        <li class="list-group-item card-subtitle mb-2">Please <strong>login</strong> after entering the lab and <strong>logout</strong>, while leaving.</li>
+                                        <li class="list-group-item card-subtitle mb-2">You may view your login status in the table to the right.</li>
+                                        <li class="list-group-item card-subtitle mb-2">If you've logged out, while leaving, but are to return soon, please login again, when you return.</li>
+                                        <li class="list-group-item card-subtitle mb-2">Thank you for your cooperation! 😄😄</li>
+                                    </ul>
+                                    <form action="" method="POST">
+                                        {% csrf_token %}
+                                        <table class="field-table">
+                                            {{ form.as_table }}
+                                        </table>
+                                        <input type="submit" class="btn btn-primary" value="Login/Logout">
+                                        <a class="btn btn-info" href="signup">Sign Up/Forgot Password?</a>
+                                        <a class="btn btn-info" href="verify">Verify OTP</a>
+                                    </form>
+                                    {% if login_error %}
+                                        <p style="color: red; margin-top: 20px;"><strong>{{ login_error }}</strong></p>
+                                    {% endif %}
+                                </div>
+                            {% endblock login %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-9">
+                    {% block content %}
+                        {% if login_list %}
+                        <table class="table table-dark table-sm table-hover">
+                        <caption>List of Login Instances for all Users, sorted in descending order, based on the Login Timestamp, for today only.</caption>
+                            <tr style="background: rgba(0, 123, 255, 0.6);">
+                                <th scope="col">NAME</th>
+                                <th scope="col">LOGIN TIME</th>
+                                <th scope="col">LOGOUT TIME</th>
+                            </tr>
+                            {% for inst in login_list %}
+                            <tr class="login-list-data">
+                                <td>{{ inst.member.name }} ({{ inst.member.email }})</td>
+                                <td>{{ inst.login_timestamp|date:"M d, Y | H:i" }}</td>
+                                <td>{% if inst.logged_out %}{{ inst.logout_timestamp|date:"M d, Y | H:i" }}{% else %}<strong style="color: red;">NOT LOGGED OUT</strong>{% endif %}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        {% else %}
+                            <p style="margin: 30px; font-size: 25px; color: tomato;">No logins today!</p>
+                        {% endif %}
+                    {% endblock %}
+
+                    {% comment %} Courtesy: https://simpleisbetterthancomplex.com/tutorial/2016/08/03/how-to-paginate-with-django.html {% endcomment %}
+                    {% if login_list.has_other_pages %}
+                        <ul class="pagination">
+                            {% if login_list.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ login_list.previous_page_number }}" aria-label="Previous">&laquo;</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link " href="">
+                                        <span>&laquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% for i in login_list.paginator.page_range %}
+                                {% if login_list.number == i %}
+                                    <li class="page-item active">
+                                        <a class="page-link " href="">
+                                            <span>{{ i }} <span class="sr-only">(current)</span></span>
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                            {% if login_list.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ login_list.next_page_number }}" aria-label="Next">&raquo;</a>
+                                </li>
+                            {% else %}
+                                <li class="page-item disabled">
+                                    <a class="page-link " href="">
+                                        <span>&raquo;</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,7 @@
+__pycache__/
+/ledger/migrations
+local_settings.py
+
+__init__.py
+.env
+db.sqlite3
